@@ -25,6 +25,10 @@ public class Person{
         this.children = children;
     }
 
+    public Person(){
+
+    }
+
     @Override
     public String toString(){
         return lastName + " " + firstName;
@@ -86,11 +90,11 @@ public class Person{
         this.region = Region.fromString(regionStr);
     }
 
-    public String getChildren() {
-        return Integer.toString(children);
+    public int getChildren() {
+        return children;
     }
 
-    public void setChildren(String children) {
-        this.children = Integer.parseInt(children);
+    public void setChildren(int children) {
+        this.children = children;
     }
 }
