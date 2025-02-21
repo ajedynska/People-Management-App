@@ -26,6 +26,8 @@ public class PersonPersistence {
                 for (Person person : personArray) {
                     people.add(person);
                 }
+            }else{
+                return null;
             }
         } catch (IOException e) {
             e.printStackTrace();

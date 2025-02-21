@@ -37,7 +37,8 @@ public class MainFrame extends JFrame {
         lblTitle.setBorder(new EmptyBorder(5, 5, 5, 0));
         lblTitle.setFont(new Font("Arial", Font.BOLD, 15));
         sprFirst = new JSeparator();
-        lstAttribute = new JList<>(new String[]{"Name", "Vorname", "Geschlecht", "Geburtsdatum", "AHV Nummer", "Region","Kinder"});
+        lstAttribute = new JList<>(controller.getPersonAttributes(index).toArray(new String[0]));
+        /*"Name", "Vorname", "Geschlecht", "Geburtsdatum", "AHV Nummer", "Region","Kinder"})*/;
         lstAttribute.setBorder(new EmptyBorder(0, 5, 0, 0));
         sprSecond = new JSeparator();
         btnNavPrevious = new JButton("<");
@@ -58,6 +59,22 @@ public class MainFrame extends JFrame {
 
         btnEdit.addActionListener(e -> {
             new DetailDialogue(controller, index); //index from the controller
+        });
+
+        btnNavPrevious.addActionListener(e -> {
+            if(index > 0) {
+                index--;
+                lblTitle.setText("Person: " + (index + 1));
+                lstAttribute.setListData(controller.getPersonAttributes(index).toArray(new String[0]));
+            }
+        });
+
+        btnNavNext.addActionListener(e -> {
+            if(index < controller.getAllPeople().size() - 1) {
+                index++;
+                lblTitle.setText("Person: " + (index + 1));
+                lstAttribute.setListData(controller.getPersonAttributes(index).toArray(new String[0]));
+            }
         });
 
         pnlTitle.setLayout(new BorderLayout());

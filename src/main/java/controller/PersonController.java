@@ -1,8 +1,11 @@
 package controller;
 
 import model.Person;
+import model.enums.Gender;
+import model.enums.Region;
 import persistence.PersonPersistence;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +36,11 @@ public class PersonController {
     }
 
     public List<String> getPersonAttributes(int index) throws IndexOutOfBoundsException {
-        Person person = people.get(index);
+        List<Person> people = getAllPeople();
+        if (people.isEmpty()) {
+            return Arrays.asList("No person found");
+        }
+        Person person = people.get(index);;
         return Arrays.asList(
                 person.getLastName(),
                 person.getFirstName(),
@@ -61,10 +68,43 @@ public class PersonController {
 
     public void loadPeople() {
         people = persistence.loadPeople();
+        if(people == null){
+            people = getDefaultPeople();
+        }
     }
 
     public void savePeople() {
         persistence.savePeople(people);
+    }
+
+    private ArrayList<Person> getDefaultPeople()
+    {
+        ArrayList<Person> defaultPeople = new ArrayList<>();
+
+        Person lars = new Person(
+                "Marty",
+                "Lars",
+                Gender.MALE,
+                LocalDate.of(2006, 12, 27),
+                "123456789",
+                Region.ZENTRALSCHWEIZ,
+                0
+        );
+
+        Person karl = new Person(
+                "Zenker",
+                "Karl",
+                Gender.MALE,
+                LocalDate.of(2008, 8, 22),
+                "123456789",
+                Region.ZENTRALSCHWEIZ,
+                0
+        );
+
+        defaultPeople.add(lars);
+        defaultPeople.add(karl);
+
+        return  defaultPeople;
     }
 
 }
