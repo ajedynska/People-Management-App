@@ -1,5 +1,7 @@
 package model.enums;
 
+import java.util.ArrayList;
+
 public enum Region {
     CENTRAL_SWISS ("Zentral Schweiz");
 
@@ -21,5 +23,14 @@ public enum Region {
         }
 
         return null;
+    }
+
+    public static ArrayList<String> getRegions(){
+        ArrayList<String> regions = new ArrayList<>();
+        for(Region region : Region.values()){
+            regions.add(region.toString());
+        }
+
+        return regions;
     }
 }

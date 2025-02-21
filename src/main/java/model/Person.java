@@ -50,8 +50,8 @@ public class Person{
         return gender.toString();
     }
 
-    public void setGender(String genderStr) {
-        this.gender = Gender.valueOf(genderStr);
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public String getDateOfBirth() {
@@ -75,7 +75,7 @@ public class Person{
     }
 
     public void setRegion(String regionStr) {
-        this.region = Region.valueOf(regionStr);
+        this.region = Region.fromString(regionStr);
     }
 
     public String getChildren() {
