@@ -19,30 +19,29 @@ public class PersonController {
         people.add(person);
     }
 
-    public void setPerson(int id, Person person) {
-        if(id != -1) {
-
-            people.set(id, person);
+    public void setPerson(int index, Person person) throws IndexOutOfBoundsException {
+        if(index != -1) {
+            people.set(index, person);
         }else{
             people.add(person);
         }
     }
 
-    public Person getPerson(int index) {
+    public Person getPerson(int index) throws IndexOutOfBoundsException {
         return people.get(index);
     }
 
-    public void updatePerson(int index, Person person) {
+    public void updatePerson(int index, Person person) throws IndexOutOfBoundsException {
         people.set(index, person);
         savePeople();
     }
 
-    public void deletePerson(int index) {
+    public void deletePerson(int index) throws IndexOutOfBoundsException {
         people.remove(index);
         savePeople();
     }
 
-    public List<Person> getAllPeople() {
+    public ArrayList<Person> getAllPeople() {
         return people;
     }
 
