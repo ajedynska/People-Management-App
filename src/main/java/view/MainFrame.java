@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.border.EmptyBorder;
 
 public class MainFrame extends JFrame {
     JLabel lblTitle;
@@ -22,8 +23,11 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         super("Personen");
         lblTitle = new JLabel("Person: ");
+        lblTitle.setBorder(new EmptyBorder(5, 5, 5, 0));
+        lblTitle.setFont(new Font("Arial", Font.BOLD, 15));
         sprFirst = new JSeparator();
-        lstAttribute = new JList<>(new String[]{"Vorname", "Nachname", "Adresse", "Telefonnummer"});
+        lstAttribute = new JList<>(new String[]{"Name", "Vorname", "Geschlecht", "Geburtsdatum", "AHV Nummer", "Region","Kinder"});
+        lstAttribute.setBorder(new EmptyBorder(0, 5, 0, 0));
         sprSecond = new JSeparator();
         btnNavPrevious = new JButton("<");
         btnNavNext = new JButton(">");
@@ -33,7 +37,9 @@ public class MainFrame extends JFrame {
         pnlTitle = new JPanel();
         pnlButton = new JPanel();
         pnlList = new JPanel();
-
+        sprFirst.setForeground(Color.BLACK);
+        sprSecond.setForeground(Color.BLACK);
+        lstAttribute.setSize(500,300);
 
         pnlTitle.setLayout(new BorderLayout());
         pnlList.setLayout(new BorderLayout());
@@ -41,10 +47,10 @@ public class MainFrame extends JFrame {
         setLayout(new BorderLayout());
 
         pnlTitle.add(lblTitle, BorderLayout.WEST);
+        pnlTitle.add(sprFirst, BorderLayout.SOUTH);
 
-
-        pnlList.add(lstAttribute, BorderLayout.WEST);
-
+        pnlList.add(lstAttribute, BorderLayout.CENTER);
+        pnlList.add(sprSecond, BorderLayout.SOUTH);
 
         pnlButton.add(btnNavPrevious);
         pnlButton.add(btnNavNext);
@@ -53,15 +59,12 @@ public class MainFrame extends JFrame {
         pnlButton.add(btnAdd);
 
         add(pnlTitle, BorderLayout.NORTH);
-        add(sprFirst);
         add(pnlList, BorderLayout.CENTER);
-        add(sprSecond);
         add(pnlButton, BorderLayout.SOUTH);
 
-        setSize(400, 300);
+        pack();
+        setSize(600, 300);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
-
     }
 }
