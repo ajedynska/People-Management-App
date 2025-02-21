@@ -70,6 +70,7 @@ public class PersonController {
         people = persistence.loadPeople();
         if(people == null){
             people = getDefaultPeople();
+            savePeople();
         }
     }
 

@@ -4,6 +4,7 @@ import controller.PersonController;
 import persistence.PersonPersistence;
 
 import javax.swing.*;
+import javax.swing.JOptionPane;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
 
@@ -33,13 +34,22 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.controller = controller;
 
-        lblTitle = new JLabel("Person: ");
-        lblTitle.setBorder(new EmptyBorder(5, 5, 5, 0));
-        lblTitle.setFont(new Font("Arial", Font.BOLD, 15));
-        sprFirst = new JSeparator();
-        lstAttribute = new JList<>(controller.getPersonAttributes(index).toArray(new String[0]));
-        /*"Name", "Vorname", "Geschlecht", "Geburtsdatum", "AHV Nummer", "Region","Kinder"})*/;
-        lstAttribute.setBorder(new EmptyBorder(0, 5, 0, 0));
+        // Ensure we have people before trying to display
+        if (controller.getAllPeople() != null && !controller.getAllPeople().isEmpty()) {
+            lblTitle = new JLabel("Person: 1");
+            lblTitle.setBorder(new EmptyBorder(5, 5, 5, 0));
+            lblTitle.setFont(new Font("Arial", Font.BOLD, 15));
+            sprFirst = new JSeparator();
+
+            // Explicitly set the list data from the first person
+            lstAttribute = new JList<>(controller.getPersonAttributes(0).toArray(new String[0]));
+            lstAttribute.setBorder(new EmptyBorder(0, 5, 0, 0));
+        } else {
+            // Handle case where no people exist
+            lblTitle = new JLabel("No People");
+            lstAttribute = new JList<>();
+        }
+
         sprSecond = new JSeparator();
         btnNavPrevious = new JButton("<");
         btnNavNext = new JButton(">");
@@ -74,6 +84,36 @@ public class MainFrame extends JFrame {
                 index++;
                 lblTitle.setText("Person: " + (index + 1));
                 lstAttribute.setListData(controller.getPersonAttributes(index).toArray(new String[0]));
+            }
+        });
+
+        btnDelete.addActionListener(e -> {
+            if (!controller.getAllPeople().isEmpty()) {
+                int confirmDelete = JOptionPane.showConfirmDialog(
+                        this,
+                        "Möchten Sie diese Person wirklich löschen?",
+                        "Person löschen",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (confirmDelete == JOptionPane.YES_OPTION) {
+                    controller.deletePerson(index);
+
+                    // Adjust index if needed
+                    if (index >= controller.getAllPeople().size()) {
+                        index = Math.max(0, controller.getAllPeople().size() - 1);
+                    }
+
+                    // Update display if people still exist
+                    if (!controller.getAllPeople().isEmpty()) {
+                        lblTitle.setText("Person: " + (index + 1));
+                        lstAttribute.setListData(controller.getPersonAttributes(index).toArray(new String[0]));
+                    } else {
+                        // No people left
+                        lblTitle.setText("No People");
+                        lstAttribute.setListData(new String[0]);
+                    }
+                }
             }
         });
 

@@ -5,7 +5,7 @@ import model.enums.Region;
 
 import java.time.LocalDate;
 
-public class Person{
+public class Person {
     private String lastName;
     private String firstName;
     private Gender gender;
@@ -25,13 +25,15 @@ public class Person{
         this.children = children;
     }
 
-    public Person(){
+    public Person() {
 
     }
 
     @Override
-    public String toString(){
-        return lastName + " " + firstName;
+    public String toString() {
+        return "Nachname: " + lastName + ", Vorname: " + firstName + ", Geschlecht: " + gender +
+                ", Geburtsdatum: " + getDateOfBirth() + ", AHV-Nummer: " + ahvNumber +
+                ", Region: " + getRegion() + ", Kinder: " + children;
     }
 
     public String getLastName() {
@@ -54,7 +56,7 @@ public class Person{
         return gender.toString();
     }
 
-    public boolean isMale(){
+    public boolean isMale() {
         return gender == Gender.MALE;
     }
 
@@ -90,8 +92,8 @@ public class Person{
         this.region = Region.fromString(regionStr);
     }
 
-    public int getChildren() {
-        return children;
+    public String getChildren() {
+        return Integer.toString(children);
     }
 
     public void setChildren(int children) {

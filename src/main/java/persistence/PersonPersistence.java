@@ -1,7 +1,12 @@
 package persistence;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import model.Person;
+import model.enums.Gender;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,20 +19,34 @@ public class PersonPersistence {
 
     public PersonPersistence() {
         mapper = new ObjectMapper();
+
+        // Create a module to handle custom deserialization
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(Gender.class, new JsonDeserializer<Gender>() {
+            @Override
+            public Gender deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+                String value = p.getValueAsString();
+                Gender gender = Gender.fromString(value);
+                if (gender == null) {
+                    throw new IllegalArgumentException("Invalid gender: " + value);
+                }
+                return gender;
+            }
+        });
+
+        mapper.registerModule(module);
     }
 
     public ArrayList<Person> loadPeople() {
-        ArrayList<Person> people = new ArrayList<>();
+        ArrayList<Person> people = null;
         try {
             File jsonFile = new File(filename);
 
             if (jsonFile.exists()) {
-                Person[] personArray = mapper.readValue(jsonFile, Person[].class);
-                for (Person person : personArray) {
-                    people.add(person);
-                }
+                people = new ArrayList<>();
+                people.addAll(List.of(mapper.readValue(jsonFile, Person[].class)));
             }else{
-                return null;
+                jsonFile.createNewFile(); // and return null
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,5 +63,4 @@ public class PersonPersistence {
             exception.printStackTrace();
         }
     }
-
 }
