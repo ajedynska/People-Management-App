@@ -50,12 +50,12 @@ public class DetailDialogue extends JDialog {
     // Containers end
 
     private PersonController controller;
-    private Person currentPerson;
+    private int currentPersonIndex;
     private String title;
 
-    public DetailDialogue(PersonController controller, Person currentPerson) {
+    public DetailDialogue(PersonController controller, int currentPersonIndex) {
         this.controller = controller;
-        this.currentPerson = currentPerson;
+        this.currentPersonIndex = currentPersonIndex;
         title = "Person bearbeiten";
         addContent();
     }
@@ -72,6 +72,10 @@ public class DetailDialogue extends JDialog {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         radMale.setSelected(true);
+
+        ButtonGroup radSex = new ButtonGroup();
+        radSex.add(radMale);
+        radSex.add(radFemale);
 
         for (String str : Region.getRegionsAsString()){
             cmbRegion.addItem(str);
@@ -90,7 +94,13 @@ public class DetailDialogue extends JDialog {
 
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                txtLastName.getText();
+                txtFirstName.getText();
+                radSex.getSelection();
+                txtDateOfBirth.getText();
+                txtAhvNumber.getText();
+                cmbRegion.getSelectedItem().toString();
+                spnChildren.getValue();
             }
         });
 
@@ -118,10 +128,6 @@ public class DetailDialogue extends JDialog {
         pnlTitle.add(sprData, BorderLayout.SOUTH);
 
         pnlButtons.add(sprButtons, BorderLayout.NORTH);
-
-        ButtonGroup radSex = new ButtonGroup();
-        radSex.add(radMale);
-        radSex.add(radFemale);
 
         pnlDataSex.add(radMale);
         pnlDataSex.add(radFemale);
