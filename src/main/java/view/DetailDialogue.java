@@ -205,10 +205,4 @@ public class DetailDialogue extends JDialog {
         cmbRegion.setSelectedItem(newContent.getRegion());
         spnChildren.setValue(newContent.getChildrenInt());
     }
-
-    public static void main(String[] args) {
-        PersonPersistence persistence = new PersonPersistence();
-        PersonController controller = new PersonController(persistence);
-        DetailDialogue dialogue = new DetailDialogue(controller);
-    }
 }
