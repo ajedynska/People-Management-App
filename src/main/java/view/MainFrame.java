@@ -31,15 +31,23 @@ public class MainFrame extends JFrame {
         sprSecond = new JSeparator();
         btnNavPrevious = new JButton("<");
         btnNavNext = new JButton(">");
-        btnDelete = new JButton("Löschen");
-        btnEdit = new JButton("Bearbeiten");
-        btnAdd = new JButton("Hinzufügen");
+        btnDelete = new JButton(" Person löschen");
+        btnEdit = new JButton("Person bearbeiten");
+        btnAdd = new JButton("Person hinzufügen");
         pnlTitle = new JPanel();
         pnlButton = new JPanel();
         pnlList = new JPanel();
         sprFirst.setForeground(Color.BLACK);
         sprSecond.setForeground(Color.BLACK);
         lstAttribute.setSize(500,300);
+
+        btnAdd.addActionListener(e -> {
+            new DetailDialogue("Hinzufügen");
+        });
+
+        btnEdit.addActionListener(e -> {
+            new DetailDialogue("Bearbeiten");
+        });
 
         pnlTitle.setLayout(new BorderLayout());
         pnlList.setLayout(new BorderLayout());
