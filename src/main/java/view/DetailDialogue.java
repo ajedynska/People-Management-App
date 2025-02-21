@@ -1,5 +1,9 @@
 package view;
 
+import controller.PersonController;
+import model.Person;
+import model.enums.Region;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -45,13 +49,18 @@ public class DetailDialogue extends JDialog {
     JPanel pnlButtons = new JPanel();
     // Containers end
 
+    private PersonController controller;
+    private Person currentPerson;
     private String title;
-    public DetailDialogue(int index) {
+
+    public DetailDialogue(PersonController controller, Person currentPerson) {
+        this.controller = controller;
+        this.currentPerson = currentPerson;
         title = "Person bearbeiten";
         addContent();
     }
 
-    public DetailDialogue() {
+    public DetailDialogue(PersonController controller) {
         title = "Person erfassen";
         addContent();
     }
@@ -62,17 +71,22 @@ public class DetailDialogue extends JDialog {
         //this.setSize(500, 500); //replace with pack();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        radMale.setSelected(true);
+
+        for (String str : Region.getRegionsAsString()){
+            cmbRegion.addItem(str);
+        }
+
+        cmbRegion.setSelectedIndex(5);
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         pnlTitle.setBorder(new EmptyBorder(5, 5, 5, 5));
         pnlData.setBorder(new EmptyBorder(5, 5, 5, 5));
         pnlButtons.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-
         pnlTitle.setLayout(new BorderLayout());
         pnlData.setLayout(new GridLayout(7, 2, 5, 5));
         pnlButtons.setLayout(new FlowLayout(FlowLayout.CENTER));
-
 
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -82,7 +96,8 @@ public class DetailDialogue extends JDialog {
 
         btnCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                setVisible(false);
+                dispose();
             }
         });
 
@@ -90,7 +105,12 @@ public class DetailDialogue extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 txtLastName.setText("");
                 txtFirstName.setText("");
-
+                radMale.setSelected(true);
+                radFemale.setSelected(false);
+                txtDateOfBirth.setText("");
+                txtAhvNumber.setText("");
+                cmbRegion.setSelectedIndex(5);
+                spnChildren.setValue(0);
             }
         });
 
@@ -98,6 +118,10 @@ public class DetailDialogue extends JDialog {
         pnlTitle.add(sprData, BorderLayout.SOUTH);
 
         pnlButtons.add(sprButtons, BorderLayout.NORTH);
+
+        ButtonGroup radSex = new ButtonGroup();
+        radSex.add(radMale);
+        radSex.add(radFemale);
 
         pnlDataSex.add(radMale);
         pnlDataSex.add(radFemale);
