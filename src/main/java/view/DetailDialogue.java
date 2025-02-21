@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class DetailDialogue extends JDialog {
@@ -10,34 +11,35 @@ public class DetailDialogue extends JDialog {
 
     JLabel lblTitle;
 
-    JSeparator sprData;
+    JSeparator sprData =  new JSeparator();
 
     JLabel lblLastName = new JLabel("Name:");
-    JTextField txtLastName;
+    JTextField txtLastName = new JTextField();
     JLabel lblFirstName = new JLabel("Vorname:");
-    JTextField txtFirstName;
+    JTextField txtFirstName = new JTextField();
     JLabel lblSex = new JLabel("Sex:");
     JRadioButton radMale = new JRadioButton("Mann");
     JRadioButton radFemale = new JRadioButton("Frau");
     JLabel lblDateOfBirth = new JLabel("Geburtsdatum:");
-    JTextField txtDateOfBirth;
+    JTextField txtDateOfBirth = new JTextField();
     JLabel lblAhvNumber = new JLabel("AHV Nummer:");
-    JTextField txtAhvNumber;
+    JTextField txtAhvNumber = new JTextField();
     JLabel lblRegion = new JLabel("Region:");
-    JComboBox<String> cmbRegion;
+    JComboBox<String> cmbRegion = new JComboBox<>();
     JLabel lblChildren = new JLabel("Kinder:");
-    JSpinner spnChildren;
+    JSpinner spnChildren = new JSpinner();
 
-    JSeparator sprButtons;
+    JSeparator sprButtons = new JSeparator();
 
     JButton btnSave = new JButton("Speichern");
     JButton btnCancel = new JButton("Abbrechen");
     // Dialogue Items end
 
     // Containers start
-    JPanel pnlTitle;
-    JPanel pnlData;
-    JPanel pnlButtons;
+    JPanel pnlTitle = new JPanel();
+    JPanel pnlData = new JPanel();
+    JPanel pnlDataSex = new JPanel();
+    JPanel pnlButtons = new JPanel();
     // Containers end
 
 
@@ -45,12 +47,27 @@ public class DetailDialogue extends JDialog {
         title = "Person " + title;
         this.setTitle(title);
         lblTitle = new JLabel(title);
-        this.setSize(500, 500); //replace with pack();
+        //this.setSize(500, 500); //replace with pack();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
-        pnlTitle.add(lblTitle);
+        pnlTitle.setBorder(new EmptyBorder(5, 5, 5, 5));
+        pnlData.setBorder(new EmptyBorder(5, 5, 5, 5));
+        pnlButtons.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+
+        pnlTitle.setLayout(new BorderLayout());
+        pnlData.setLayout(new GridLayout(7, 2, 5, 5));
+        pnlButtons.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        pnlTitle.add(lblTitle, BorderLayout.WEST);
+        pnlTitle.add(sprData, BorderLayout.SOUTH);
+
+        pnlButtons.add(sprButtons, BorderLayout.NORTH);
+
+        pnlDataSex.add(radMale);
+        pnlDataSex.add(radFemale);
 
         pnlContent.add(sprData);
 
@@ -59,8 +76,7 @@ public class DetailDialogue extends JDialog {
         pnlData.add(lblFirstName);
         pnlData.add(txtFirstName);
         pnlData.add(lblSex);
-        pnlData.add(radMale);
-        pnlData.add(radFemale);
+        pnlData.add(pnlDataSex);
         pnlData.add(lblDateOfBirth);
         pnlData.add(txtDateOfBirth);
         pnlData.add(lblAhvNumber);
@@ -76,8 +92,6 @@ public class DetailDialogue extends JDialog {
         pnlButtons.add(btnCancel);
 
 
-        pnlData.setLayout(new GridLayout(7, 2, 5, 15));
-        pnlButtons.setLayout(new FlowLayout(FlowLayout.CENTER));
 
 
         // Add panels start
@@ -86,10 +100,12 @@ public class DetailDialogue extends JDialog {
         pnlContent.add(pnlButtons, BorderLayout.SOUTH);
         // Add panels end
 
+        this.setContentPane(pnlContent);
+        this.pack();
         this.setVisible(true);
     }
 
     public static void main(String[] args) {
-        DetailDialogue dialogue = new DetailDialogue("erstellen");
+        DetailDialogue dialogue = new DetailDialogue("erfassen");
     }
 }
