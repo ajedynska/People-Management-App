@@ -1,10 +1,14 @@
+// In Person.java
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import model.enums.Gender;
 import model.enums.Region;
 
 import java.time.LocalDate;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Person {
     private String lastName;
     private String firstName;
@@ -15,6 +19,10 @@ public class Person {
     private int children;
 
     public static final String AhvEmptyFormat = "###.####.####.##";
+
+    // Default constructor
+    public Person() {
+    }
 
     public Person(String lastName, String firstName, Gender gender, LocalDate dateOfBirth,
                   String ahvNumber, Region region, int children) {
@@ -27,10 +35,6 @@ public class Person {
         this.children = children;
     }
 
-    public Person() {
-
-    }
-
     @Override
     public String toString() {
         return "Nachname: " + lastName + ", Vorname: " + firstName + ", Geschlecht: " + gender +
@@ -38,6 +42,7 @@ public class Person {
                 ", Region: " + getRegion() + ", Kinder: " + children;
     }
 
+    // Getters and setters
     public String getLastName() {
         return lastName;
     }
@@ -66,6 +71,7 @@ public class Person {
         this.gender = gender;
     }
 
+    @JsonProperty("male")
     public void setIsMale(boolean isMale) {
         this.gender = isMale ? Gender.MALE : Gender.FEMALE;
     }

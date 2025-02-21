@@ -127,8 +127,8 @@ public class MainFrame extends JFrame {
 
                     // Update display if people still exist
                     if (!controller.getAllPeople().isEmpty()) {
-                        lblTitle.setText("Person: " + (index + 1));
                         List<String> personAttributes = controller.getPersonAttributes(index);
+                        lblTitle.setText("Person: " + personAttributes.get(1) + " " + personAttributes.get(0));
                         String[] labels = {"Name:", "Vorname:", "Geschlecht:", "Geburtsdatum:", "AHV Nummer:", "Region:", "Kinder:"};
                         String[] listData = new String[personAttributes.size()];
                         for (int i = 0; i < personAttributes.size(); i++) {

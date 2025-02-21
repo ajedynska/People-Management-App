@@ -24,11 +24,12 @@ public class PersonController {
     }
 
     public void setPerson(int index, Person person) throws IndexOutOfBoundsException {
-        if(index != -1) {
+        if (index != -1) {
             people.set(index, person);
-        }else{
+        } else {
             people.add(person);
         }
+        savePeople(); // Save the updated list to the JSON file
     }
 
     public Person getPerson(int index) throws IndexOutOfBoundsException {
