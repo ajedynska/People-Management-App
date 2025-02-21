@@ -37,7 +37,8 @@ public class MainFrame extends JFrame {
 
         // Ensure we have people before trying to display
         if (controller.getAllPeople() != null && !controller.getAllPeople().isEmpty()) {
-            lblTitle = new JLabel("Person: 1");
+            List<String> personAttributes = controller.getPersonAttributes(index);
+            lblTitle = new JLabel("Person: " + personAttributes.get(1) + " " + personAttributes.get(0));
             lblTitle.setBorder(new EmptyBorder(5, 5, 5, 0));
             lblTitle.setFont(new Font("Arial", Font.BOLD, 15));
             sprFirst = new JSeparator();
@@ -46,7 +47,7 @@ public class MainFrame extends JFrame {
             String[] labels = {"Name:", "Vorname:", "Geschlecht:", "Geburtsdatum:", "AHV Nummer:", "Region:", "Kinder:"};
 
             // Explicitly set the list data from the first person with labels
-            List<String> personAttributes = controller.getPersonAttributes(0);
+            personAttributes = controller.getPersonAttributes(0);
             String[] listData = new String[personAttributes.size()];
             for (int i = 0; i < personAttributes.size(); i++) {
                 listData[i] = labels[i] + " " + personAttributes.get(i);
@@ -82,8 +83,8 @@ public class MainFrame extends JFrame {
         btnNavPrevious.addActionListener(e -> {
             if(index > 0) {
                 index--;
-                lblTitle.setText("Person: " + (index + 1));
                 List<String> personAttributes = controller.getPersonAttributes(index);
+                lblTitle.setText("Person: " + personAttributes.get(1) + " " + personAttributes.get(0));
                 String[] labels = {"Name:", "Vorname:", "Geschlecht:", "Geburtsdatum:", "AHV Nummer:", "Region:", "Kinder:"};
                 String[] listData = new String[personAttributes.size()];
                 for (int i = 0; i < personAttributes.size(); i++) {
@@ -96,8 +97,8 @@ public class MainFrame extends JFrame {
         btnNavNext.addActionListener(e -> {
             if(index < controller.getAllPeople().size() - 1) {
                 index++;
-                lblTitle.setText("Person: " + (index + 1));
                 List<String> personAttributes = controller.getPersonAttributes(index);
+                lblTitle.setText("Person: " + personAttributes.get(1) + " " + personAttributes.get(0));
                 String[] labels = {"Name:", "Vorname:", "Geschlecht:", "Geburtsdatum:", "AHV Nummer:", "Region:", "Kinder:"};
                 String[] listData = new String[personAttributes.size()];
                 for (int i = 0; i < personAttributes.size(); i++) {
