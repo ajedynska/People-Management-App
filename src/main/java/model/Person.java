@@ -10,7 +10,23 @@ public class Person{
     private String firstName;
     private Gender gender;
     private LocalDate dateOfBirth;
-    private String AhvNumber;
+    private String ahvNumber;
     private Region region;
     private int children;
+
+    public Person(String lastName, String firstName, Gender gender, LocalDate dateOfBirth,
+                  String ahvNumber, Region region, int children) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.ahvNumber = ahvNumber;
+        this.region = region;
+        this.children = children;
+    }
+
+    @Override
+    public String toString(){
+        return lastName + " " + firstName;
+    }
 }
