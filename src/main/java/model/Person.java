@@ -58,6 +58,10 @@ public class Person{
         this.gender = gender;
     }
 
+    public void setIsMale(boolean isMale) {
+        this.gender = isMale ? Gender.MALE : Gender.FEMALE;
+    }
+
     public String getDateOfBirth() {
         return LocalDateConverter.convertDateToString(dateOfBirth);
     }
