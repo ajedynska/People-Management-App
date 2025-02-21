@@ -24,7 +24,7 @@ public class PersonController {
     }
 
     public void setPerson(int index, Person person) throws IndexOutOfBoundsException {
-        if(index != 0) {
+        if(index != -1) {
             people.set(index, person);
         }else{
             people.add(person);
