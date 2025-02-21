@@ -20,8 +20,8 @@ public class PersonController {
         people.add(person);
     }
 
-    public void setPerson(int index, Person person) {
-        if(index < people.size() && index >= 0) {
+    public void setPerson(int index, Person person) throws IndexOutOfBoundsException {
+        if(index != 0) {
             people.set(index, person);
         }else{
             people.add(person);
