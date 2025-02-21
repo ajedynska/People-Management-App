@@ -4,6 +4,7 @@ import model.Person;
 import persistence.PersonPersistence;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PersonController {
@@ -20,7 +21,7 @@ public class PersonController {
     }
 
     public void setPerson(int index, Person person) throws IndexOutOfBoundsException {
-        if(index != -1) {
+        if(index != 0) {
             people.set(index, person);
         }else{
             people.add(person);
@@ -29,6 +30,19 @@ public class PersonController {
 
     public Person getPerson(int index) throws IndexOutOfBoundsException {
         return people.get(index);
+    }
+
+    public List<String> getPersonAttributes(int index) throws IndexOutOfBoundsException {
+        Person person = people.get(index);
+        return Arrays.asList(
+                person.getLastName(),
+                person.getFirstName(),
+                person.getGender(),
+                person.getDateOfBirth(),
+                person.getAhvNumber(),
+                person.getRegion(),
+                person.getChildren()
+        );
     }
 
     public void updatePerson(int index, Person person) throws IndexOutOfBoundsException {
