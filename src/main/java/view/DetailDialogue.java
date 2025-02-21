@@ -112,6 +112,6 @@ public class DetailDialogue extends JDialog {
     }
 
     public static void main(String[] args) {
-        DetailDialogue dialogue = new DetailDialogue("erfassen");
+        DetailDialogue dialogue = new DetailDialogue();
     }
 }
