@@ -32,7 +32,11 @@ public class PersonController {
     }
 
     public Person getPerson(int index) throws IndexOutOfBoundsException {
-        return people.get(index);
+        if(index != -1) {
+            return people.get(index);
+        }else{
+            return new Person("", "", Gender.MALE, LocalDate.now(), Person.AhvEmptyFormat, Region.ZENTRALSCHWEIZ, 0);
+        }
     }
 
     public List<String> getPersonAttributes(int index) throws IndexOutOfBoundsException {

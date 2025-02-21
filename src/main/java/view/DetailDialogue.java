@@ -3,12 +3,14 @@ package view;
 import controller.PersonController;
 import model.Person;
 import model.enums.Region;
+import persistence.PersonPersistence;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 
 public class DetailDialogue extends JDialog {
 
@@ -17,7 +19,7 @@ public class DetailDialogue extends JDialog {
 
     JLabel lblTitle;
 
-    JSeparator sprData =  new JSeparator();
+    JSeparator sprData =  new JSeparator(); // not functional, approved by Casauro
 
     JLabel lblLastName = new JLabel("Name:");
     JTextField txtLastName = new JTextField();
@@ -27,15 +29,16 @@ public class DetailDialogue extends JDialog {
     JRadioButton radMale = new JRadioButton("Mann");
     JRadioButton radFemale = new JRadioButton("Frau");
     JLabel lblDateOfBirth = new JLabel("Geburtsdatum:");
-    JTextField txtDateOfBirth = new JTextField();
+    JFormattedTextField txtDateOfBirth = new JFormattedTextField(new SimpleDateFormat("dd.MM.yyyy"));
     JLabel lblAhvNumber = new JLabel("AHV Nummer:");
     JTextField txtAhvNumber = new JTextField();
     JLabel lblRegion = new JLabel("Region:");
     JComboBox<String> cmbRegion = new JComboBox<>();
     JLabel lblChildren = new JLabel("Kinder:");
-    JSpinner spnChildren = new JSpinner();
+    SpinnerModel model = new SpinnerNumberModel(0, 0, 100, 1);
+    JSpinner spnChildren = new JSpinner(model);
 
-    JSeparator sprButtons = new JSeparator();
+    JSeparator sprButtons = new JSeparator(); // not functional, approved by Casauro
 
     JButton btnSave = new JButton("Speichern");
     JButton btnCancel = new JButton("Abbrechen");
@@ -61,6 +64,8 @@ public class DetailDialogue extends JDialog {
     }
 
     public DetailDialogue(PersonController controller) {
+        this.controller = controller;
+        this.currentPersonIndex = -1;
         title = "Person erfassen";
         addContent();
     }
@@ -68,7 +73,7 @@ public class DetailDialogue extends JDialog {
     private void addContent(){
         this.setTitle(title);
         lblTitle = new JLabel(title);
-        //this.setSize(500, 500); //replace with pack();
+        //this.setSize(500, 500); // replace with pack();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         radMale.setSelected(true);
@@ -94,13 +99,19 @@ public class DetailDialogue extends JDialog {
 
         btnSave.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                txtLastName.getText();
-                txtFirstName.getText();
-                radSex.getSelection();
-                txtDateOfBirth.getText();
-                txtAhvNumber.getText();
-                cmbRegion.getSelectedItem().toString();
-                spnChildren.getValue();
+                if(!isEmptyForm())
+                {
+                    Person newPerson = new Person();
+                    newPerson.setLastName(txtLastName.getText());
+                    newPerson.setFirstName(txtFirstName.getText());
+                    newPerson.setIsMale(radMale.isSelected());
+                    newPerson.setDateOfBirth(txtDateOfBirth.getText());
+                    newPerson.setAhvNumber(txtAhvNumber.getText());
+                    newPerson.setRegion(cmbRegion.getSelectedItem().toString());
+                    newPerson.setChildren((Integer) spnChildren.getValue());
+
+                    controller.setPerson(currentPersonIndex, newPerson);
+                }
             }
         });
 
@@ -113,14 +124,15 @@ public class DetailDialogue extends JDialog {
 
         btnClear.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                txtLastName.setText("");
-                txtFirstName.setText("");
-                radMale.setSelected(true);
-                radFemale.setSelected(false);
-                txtDateOfBirth.setText("");
-                txtAhvNumber.setText("");
-                cmbRegion.setSelectedIndex(5);
-                spnChildren.setValue(0);
+//                txtLastName.setText("");
+//                txtFirstName.setText("");
+//                radMale.setSelected(true);
+//                radFemale.setSelected(false);
+//                txtDateOfBirth.setText("");
+//                txtAhvNumber.setText("###.####.####.##");
+//                cmbRegion.setSelectedIndex(5);
+//                spnChildren.setValue(0);
+                setContentData();
             }
         });
 
@@ -161,12 +173,42 @@ public class DetailDialogue extends JDialog {
         pnlContent.add(pnlButtons, BorderLayout.SOUTH);
         // Add panels end
 
+        setContentData();
+
         this.setContentPane(pnlContent);
         this.pack();
         this.setVisible(true);
     }
 
+    private boolean isEmptyForm() {
+        boolean isEmpty = false;
+        isEmpty = isEmpty || txtLastName.getText().isBlank();
+        isEmpty = isEmpty || txtFirstName.getText().isBlank();
+        isEmpty = isEmpty || txtDateOfBirth.getText().isBlank();
+        isEmpty = isEmpty || txtAhvNumber.getText().isBlank() || txtAhvNumber.getText().equals(Person.AhvEmptyFormat);
+
+        if (isEmpty){
+            JOptionPane.showMessageDialog(this, "Felder dürfen nicht leer sein!", "Fehlermeldung", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+        return isEmpty;
+    }
+
+    private void setContentData(){
+        Person newContent = controller.getPerson(currentPersonIndex);
+        txtLastName.setText(newContent.getLastName());
+        txtFirstName.setText(newContent.getFirstName());
+        radMale.setSelected(newContent.isMale());
+        radFemale.setSelected(!newContent.isMale());
+        txtDateOfBirth.setText(newContent.getDateOfBirth());
+        txtAhvNumber.setText(newContent.getAhvNumber());
+        cmbRegion.setSelectedItem(newContent.getRegion());
+        spnChildren.setValue(newContent.getChildrenInt());
+    }
+
     public static void main(String[] args) {
-        //DetailDialogue dialogue = new DetailDialogue();
+        PersonPersistence persistence = new PersonPersistence();
+        PersonController controller = new PersonController(persistence);
+        DetailDialogue dialogue = new DetailDialogue(controller);
     }
 }

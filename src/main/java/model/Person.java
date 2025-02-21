@@ -14,6 +14,8 @@ public class Person {
     private Region region;
     private int children;
 
+    public static final String AhvEmptyFormat = "###.####.####.##";
+
     public Person(String lastName, String firstName, Gender gender, LocalDate dateOfBirth,
                   String ahvNumber, Region region, int children) {
         this.lastName = lastName;
@@ -94,6 +96,10 @@ public class Person {
 
     public String getChildren() {
         return Integer.toString(children);
+    }
+
+    public int getChildrenInt() {
+        return children;
     }
 
     public void setChildren(int children) {
