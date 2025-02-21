@@ -46,11 +46,11 @@ public class PersonController {
     }
 
     public void loadPeople() {
-        // Load people from file
+        people = persistence.loadPeople();
     }
 
     public void savePeople() {
-        // Save people to file
+        persistence.savePeople(people);
     }
 
 }

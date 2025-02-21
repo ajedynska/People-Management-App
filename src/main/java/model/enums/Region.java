@@ -25,7 +25,7 @@ public enum Region {
         return null;
     }
 
-    public static ArrayList<String> getRegions(){
+    public static ArrayList<String> getRegionsAsString(){
         ArrayList<String> regions = new ArrayList<>();
         for(Region region : Region.values()){
             regions.add(region.toString());

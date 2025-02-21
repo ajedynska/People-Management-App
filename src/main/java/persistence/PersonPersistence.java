@@ -16,8 +16,8 @@ public class PersonPersistence {
         mapper = new ObjectMapper();
     }
 
-    public List<Person> loadPeople() {
-        List<Person> people = new ArrayList<Person>();
+    public ArrayList<Person> loadPeople() {
+        ArrayList<Person> people = new ArrayList<>();
         try {
             File jsonFile = new File(filename);
 
@@ -33,7 +33,7 @@ public class PersonPersistence {
         return people;
     }
 
-    public void savePeople(List<Person> people) {
+    public void savePeople(ArrayList<Person> people) {
         try {
             File jsonFile = new File(filename);
             mapper.writerWithDefaultPrettyPrinter().writeValue(jsonFile, people);
