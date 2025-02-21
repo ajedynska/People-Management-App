@@ -111,6 +111,9 @@ public class DetailDialogue extends JDialog {
                     newPerson.setChildren((Integer) spnChildren.getValue());
 
                     controller.setPerson(currentPersonIndex, newPerson);
+
+                    setVisible(false);
+                    dispose();
                 }
             }
         });
@@ -124,14 +127,6 @@ public class DetailDialogue extends JDialog {
 
         btnClear.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-//                txtLastName.setText("");
-//                txtFirstName.setText("");
-//                radMale.setSelected(true);
-//                radFemale.setSelected(false);
-//                txtDateOfBirth.setText("");
-//                txtAhvNumber.setText("###.####.####.##");
-//                cmbRegion.setSelectedIndex(5);
-//                spnChildren.setValue(0);
                 setContentData();
             }
         });
