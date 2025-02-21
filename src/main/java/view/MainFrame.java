@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.JOptionPane;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
+import java.util.List;
 
 public class MainFrame extends JFrame {
     JLabel lblTitle;
@@ -41,8 +42,16 @@ public class MainFrame extends JFrame {
             lblTitle.setFont(new Font("Arial", Font.BOLD, 15));
             sprFirst = new JSeparator();
 
-            // Explicitly set the list data from the first person
-            lstAttribute = new JList<>(controller.getPersonAttributes(0).toArray(new String[0]));
+            // Add labels for each attribute
+            String[] labels = {"Name:", "Vorname:", "Geschlecht:", "Geburtsdatum:", "AHV Nummer:", "Region:", "Kinder:"};
+
+            // Explicitly set the list data from the first person with labels
+            List<String> personAttributes = controller.getPersonAttributes(0);
+            String[] listData = new String[personAttributes.size()];
+            for (int i = 0; i < personAttributes.size(); i++) {
+                listData[i] = labels[i] + " " + personAttributes.get(i);
+            }
+            lstAttribute = new JList<>(listData);
             lstAttribute.setBorder(new EmptyBorder(0, 5, 0, 0));
         } else {
             // Handle case where no people exist
@@ -61,7 +70,6 @@ public class MainFrame extends JFrame {
         pnlList = new JPanel();
         sprFirst.setForeground(Color.BLACK);
         sprSecond.setForeground(Color.BLACK);
-        lstAttribute.setSize(500,300);
 
         btnAdd.addActionListener(e -> {
             new DetailDialogue(controller);
@@ -75,7 +83,13 @@ public class MainFrame extends JFrame {
             if(index > 0) {
                 index--;
                 lblTitle.setText("Person: " + (index + 1));
-                lstAttribute.setListData(controller.getPersonAttributes(index).toArray(new String[0]));
+                List<String> personAttributes = controller.getPersonAttributes(index);
+                String[] labels = {"Name:", "Vorname:", "Geschlecht:", "Geburtsdatum:", "AHV Nummer:", "Region:", "Kinder:"};
+                String[] listData = new String[personAttributes.size()];
+                for (int i = 0; i < personAttributes.size(); i++) {
+                    listData[i] = labels[i] + " " + personAttributes.get(i);
+                }
+                lstAttribute.setListData(listData);
             }
         });
 
@@ -83,7 +97,13 @@ public class MainFrame extends JFrame {
             if(index < controller.getAllPeople().size() - 1) {
                 index++;
                 lblTitle.setText("Person: " + (index + 1));
-                lstAttribute.setListData(controller.getPersonAttributes(index).toArray(new String[0]));
+                List<String> personAttributes = controller.getPersonAttributes(index);
+                String[] labels = {"Name:", "Vorname:", "Geschlecht:", "Geburtsdatum:", "AHV Nummer:", "Region:", "Kinder:"};
+                String[] listData = new String[personAttributes.size()];
+                for (int i = 0; i < personAttributes.size(); i++) {
+                    listData[i] = labels[i] + " " + personAttributes.get(i);
+                }
+                lstAttribute.setListData(listData);
             }
         });
 
@@ -107,7 +127,13 @@ public class MainFrame extends JFrame {
                     // Update display if people still exist
                     if (!controller.getAllPeople().isEmpty()) {
                         lblTitle.setText("Person: " + (index + 1));
-                        lstAttribute.setListData(controller.getPersonAttributes(index).toArray(new String[0]));
+                        List<String> personAttributes = controller.getPersonAttributes(index);
+                        String[] labels = {"Name:", "Vorname:", "Geschlecht:", "Geburtsdatum:", "AHV Nummer:", "Region:", "Kinder:"};
+                        String[] listData = new String[personAttributes.size()];
+                        for (int i = 0; i < personAttributes.size(); i++) {
+                            listData[i] = labels[i] + " " + personAttributes.get(i);
+                        }
+                        lstAttribute.setListData(listData);
                     } else {
                         // No people left
                         lblTitle.setText("No People");
@@ -125,7 +151,7 @@ public class MainFrame extends JFrame {
         pnlTitle.add(lblTitle, BorderLayout.WEST);
         pnlTitle.add(sprFirst, BorderLayout.SOUTH);
 
-        pnlList.add(lstAttribute, BorderLayout.CENTER);
+        pnlList.add(new JScrollPane(lstAttribute), BorderLayout.CENTER);
         pnlList.add(sprSecond, BorderLayout.SOUTH);
 
         pnlButton.add(btnNavPrevious);
