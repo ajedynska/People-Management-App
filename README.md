@@ -1,1 +1,1 @@
-# PersonManagementApp
+# PeopleManagementApp
