@@ -3,7 +3,13 @@ package model.enums;
 import java.util.ArrayList;
 
 public enum Region {
-    CENTRAL_SWISS ("Zentral Schweiz");
+    GENFERSEE ("Genfersee"),
+    ESPACE_MITTELLAND ("Espace Mittelland"),
+    NORDWESTSCHWEIZ ("Nordwestschweiz"),
+    ZUERICH ("Zürich"),
+    OSTSCHWEIZ ("Ostschweiz"),
+    ZENTRALSCHWEIZ ("Zentralschweiz"),
+    TESSIN ("Tessin");
 
     private final String nameGerman;
 

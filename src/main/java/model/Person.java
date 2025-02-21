@@ -50,6 +50,10 @@ public class Person{
         return gender.toString();
     }
 
+    public boolean isMale(){
+        return gender == Gender.MALE;
+    }
+
     public void setGender(Gender gender) {
         this.gender = gender;
     }
