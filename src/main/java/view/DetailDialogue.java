@@ -42,9 +42,18 @@ public class DetailDialogue extends JDialog {
     JPanel pnlButtons = new JPanel();
     // Containers end
 
+    private String title;
+    public DetailDialogue(int index) {
+        title = "Person bearbeiten";
+        addContent();
+    }
 
-    public DetailDialogue(String title) {
-        title = "Person " + title;
+    public DetailDialogue() {
+        title = "Person erfassen";
+        addContent();
+    }
+
+    private void addContent(){
         this.setTitle(title);
         lblTitle = new JLabel(title);
         //this.setSize(500, 500); //replace with pack();
@@ -90,9 +99,6 @@ public class DetailDialogue extends JDialog {
 
         pnlButtons.add(btnSave);
         pnlButtons.add(btnCancel);
-
-
-
 
         // Add panels start
         pnlContent.add(pnlTitle, BorderLayout.NORTH);
