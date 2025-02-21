@@ -1,5 +1,8 @@
 package view;
 
+import controller.PersonController;
+import persistence.PersonPersistence;
+
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
@@ -19,9 +22,17 @@ public class MainFrame extends JFrame {
     JPanel pnlList;
     JPanel pnlButton;
 
+    PersonController controller;
+    int index = 0; // Initialize the index variable
 
-    public MainFrame() {
-        super("Personen");
+    public MainFrame(PersonController controller) {
+        setTitle("Personen");
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setSize(600, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.controller = controller;
+
         lblTitle = new JLabel("Person: ");
         lblTitle.setBorder(new EmptyBorder(5, 5, 5, 0));
         lblTitle.setFont(new Font("Arial", Font.BOLD, 15));
@@ -42,11 +53,11 @@ public class MainFrame extends JFrame {
         lstAttribute.setSize(500,300);
 
         btnAdd.addActionListener(e -> {
-            new DetailDialogue();
+            new DetailDialogue(controller);
         });
 
         btnEdit.addActionListener(e -> {
-            new DetailDialogue(0); //index from the controller
+            new DetailDialogue(controller, index); //index from the controller
         });
 
         pnlTitle.setLayout(new BorderLayout());
@@ -70,9 +81,6 @@ public class MainFrame extends JFrame {
         add(pnlList, BorderLayout.CENTER);
         add(pnlButton, BorderLayout.SOUTH);
 
-        pack();
-        setSize(600, 300);
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }
