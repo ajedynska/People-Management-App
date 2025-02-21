@@ -1,19 +1,31 @@
 package controller;
 
 import model.Person;
+import persistence.PersonPersistence;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class PersonController {
-    private List<Person> people = new ArrayList<>();
+    private ArrayList<Person> people;
+    private PersonPersistence persistence;
 
-
-    public PersonController(List<Person> people) {
-        this.people = people;
+    public PersonController(PersonPersistence persistence) {
+        this.persistence = persistence;
+        loadPeople();
     }
 
-    public void addPerson(Person person) {
+    public void setPerson(Person person) {
         people.add(person);
+    }
+
+    public void setPerson(int id, Person person) {
+        if(id != -1) {
+
+            people.set(id, person);
+        }else{
+            people.add(person);
+        }
     }
 
     public Person getPerson(int index) {
