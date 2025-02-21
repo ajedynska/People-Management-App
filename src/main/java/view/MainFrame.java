@@ -42,11 +42,11 @@ public class MainFrame extends JFrame {
         lstAttribute.setSize(500,300);
 
         btnAdd.addActionListener(e -> {
-            new DetailDialogue("Hinzufügen");
+            new DetailDialogue();
         });
 
         btnEdit.addActionListener(e -> {
-            new DetailDialogue("Bearbeiten");
+            new DetailDialogue(0); //index from the controller
         });
 
         pnlTitle.setLayout(new BorderLayout());
